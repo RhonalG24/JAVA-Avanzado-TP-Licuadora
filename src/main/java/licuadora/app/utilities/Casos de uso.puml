@@ -1,0 +1,97 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+:Main Admin: as Admin
+(Use the application) as (Use)
+
+User -> (Start)
+User --> (Use)
+
+Admin ---> (Use)
+
+note right of Admin : This is an example.
+
+note right of (Use)
+A note can also
+be on several lines
+end note
+
+note "This note is connected\nto several objects." as N2
+(Start) .. N2
+N2 .. (Use)
+
+'/*
+''Listado de entidades
+
+' -Gestor
+' -Producto base
+    'ejemplos: remersas, gorras, fundas para smartphone
+    '-tinene: nombre, precio base, descripcion, tiempo de fabricacion
+'- Area de psonalizcoin
+    'ejemplo: frente - centro, frente - abajo
+    'tiene: nombre
+'- tipo de personalizacion
+'   ejemplos: texto, imagen color, imagen b/n, emoji
+'   tiene: nombre
+
+'-posible personalizacoin
+'- vendedor . tiene medio de pago que acepta
+
+'-producto personalizado:
+'-tiene:producto base, personalizaciones
+
+'-Personalizacion especifi
+'tiene: personalizacoin, area/posible personalizaciones
+
+'-Personalizacoin:
+'ejemplos: logo de UTN (c: logo de UTN.png, p:80))
+'tinee: nombre,precio, contenido
+
+'-Tienda
+'tiene nombre, descripcion
+'-publicacion: tiene: producto, nombre, estado (publicado, pausado, cancelado, finaado), fecha, trasabilidad de los estados.
+
+'Estado publicacion: [olamente si quiero trazabiliad sonre el estado]
+'tiene: publicacion, estado real, fecha/hora
+
+'-Comprador, tienmedio de pago que acepta
+
+'-carrito compra
+'-tiene: items de carrito, comprador
+
+'item de carrito:
+'tiene publicaicon/producto personalizado, cantidad
+
+'compra: tiene: items, fechas/hora, comprador, estado (efectuado, cancelado, pagada)
+
+'darDeAlatProducto(){mal mal mal}
+'modificarProducto(){mal}
+
+
+
+'ejemplo completo
+'juan , gestor d lw plataforma, de alta una remra blanca lisa  que admite
+'el frente - cnetro: nu texto con emoji
+'eb el dorso -centro: una iiamgen color o blanco y negro
+'Eze, vendedor de la platanforma, personalia la remera blanca lisa con:
+'-logo de UTN (imagen blanco y negro)), en el dorso -centro
+
+'consideraciones importantes
+'alcanceel proyecto
+'el proyecto no comtenpla :
+' el pago que realiza el venderdor por la utilizacion del sistema
+
+'las personalizaciones pueden ser reutilizables
+'los vendedores tienen un unica tienda
+'-en el carrito solo se podran agregar items del mismo vendedor
+'no contempla la integracion de los pagos
+'recomendacion, dar de alta al carrito de compra con un ID para que el cliente maneje el mismo carrito de compra.
+'
+
+'---
+'usar swagger o Postman para el uso de la API
+'buscar testing sobre spring, rest template, rest template builder
+'tratar de hacer paginacion para los productosque se muestran
+'intentar generar y mockear la interfaz para las facturas
+*/
+@enduml

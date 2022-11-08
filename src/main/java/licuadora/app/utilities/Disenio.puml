@@ -1,0 +1,154 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam backgroundColor transparent
+skinparam backgroundColor #ffffff
+skinparam roundcorner 8
+skinparam groupinheritance 1
+skinparam class {
+
+ArrowColor black
+BorderColor #004051
+}
+
+
+
+
+class ProductoBase implements Costeable{
+-nombre:String
+-precioBase:Double
+-descripcion:String
+-tiempoFabricacion:Integer
+- HashMap<AreaPersonalizacion, GrupoTipoPersonalizacion> posiblesAreasPersonalizacion;
+}
+class ProductoPersonalizado implements Costeable{
+-productoBase : ProductoBase
+-List<AreaPersonalizacion> areaPersonalizacion
++addPersonalizacion(AreaPersonalizacion area, Personalizacion personalizacion) : void
++removePersonalizacion(AreaPersonalizacion area) : void
+}
+
+class AreaPersonalizacion implements Costeable{
+    -nombre : String
+    -personalizacion : Personalizacion
+}
+
+class Personalizacion implements Costeable{
+-nombre:String
+-tipo: TipoPersonalizacion
+-contenido : String
+-precio:Double
+}
+
+class TipoPersonalizacion{
+-nombre: String
+'texto, imagen color, imagen blanco y
+ 'negro, emoji, entre otros.
+}
+
+class GrupoTipoPersonalizacion {
+    - Long id;
+    - List<TipoPersonalizacion> listadoTipoPersonalizacion;
+}
+
+
+interface Costeable{
++getPrecio()
+}
+
+
+ProductoPersonalizado *-- ProductoBase
+ProductoPersonalizado *-- AreaPersonalizacion
+AreaPersonalizacion *-- Personalizacion
+Personalizacion *-- TipoPersonalizacion
+GrupoTipoPersonalizacion <-- ProductoBase
+GrupoTipoPersonalizacion *-- TipoPersonalizacion
+
+'-----------
+
+class Tienda{
+-id : Long
+-nombre : String
+-descripcion : String
+-List<Publicacion> publicaciones
+-carrito : CarritoCompras
+}
+
+class CarritoCompras implements Costeable{
+- idTienda : Long
+List<Publicacion> items;
+}
+
+class Publicacion{
+   - producto :Costeable
+   - nombre: String
+   - estado : EstadoPublicacion
+   '(publicado, pausado, cancelado, finalizado),
+   - fecha :LocalDateTime
+
+}
+
+interface EstadoPublicacion{
+    +agregarAlCarrito()
+    +sacarDelCarrito()
+}
+class Cancelado implements EstadoPublicacion{}
+class Pausado implements EstadoPublicacion{}
+class Publicado implements EstadoPublicacion{}
+class Finalizado implements EstadoPublicacion{}
+
+'carrito.getPrecio(){
+'    for(Publicacion p : items){
+'    p.getPrecio(){
+'        this.ProductoPersonalizado.getPrecio(){
+'            Double precio = 0;
+'            precio += ProductoBase.getPrecio
+'            for (AreaPersonalizacion aPers : areaPersonalizacion){
+'                precio += aPers.personalizacion.getPrecio()
+'            }
+'        }
+'    }
+'    }
+'}'
+
+class Compra{
+-publicaciones:List<Publicacion>
+}
+
+Tienda *-- Publicacion
+Tienda *-- CarritoCompras
+CarritoCompras <-- Publicacion
+Publicacion *-- EstadoPublicacion
+Publicacion *-- Costeable
+
+Compra <-- UsuarioBase
+Compra *-- Publicacion
+'---Usuarios--
+
+interface Rol{
++ esComprador():Boolean
++ esVendedor():Boolean
++ esGestor():Boolean
+}
+
+class UsuarioBase{
+    -usuario : String
+    -contraseña : String
+    -rol : Rol
+}
+
+class Gestor implements Rol{
+
+}
+
+class Vendedor implements Rol{
+
+}
+
+class Comprador implements Rol{
+
+}
+
+Vendedor *-- Tienda
+UsuarioBase *-- Rol
+
+@enduml
